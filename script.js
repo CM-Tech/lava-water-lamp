@@ -71,8 +71,7 @@ var initialize = (function() {
 
     function frame(e) {
 
-        if (press)
-            pour();
+        if (press) pour();
 
         var tempDelta = delta + 0;
         delta = 0;
@@ -86,7 +85,6 @@ var initialize = (function() {
     }
 
     function draw() {
-        //var maxDensity=0;
         ctx.fillStyle = "blue";
         ctx.strokeStyle = "blue";
         for (var i = 0; i < numParticles; i++) {
@@ -94,15 +92,12 @@ var initialize = (function() {
             ctx.fillStyle = "white";
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.size / 2 + 2, 0, 2 * Math.PI, false);
-            //var color=HSVtoRGB(Math.sqrt(p.density*4),1,1);
-            //ctx.fillStyle="rgb("+color.r+","+color.g+","+color.b+")";
-            //maxDensity=Math.max(maxDensity,p.density);
             ctx.fill();
 
 
         }
 
-        for (var i = 0; i < numParticles; i++) {
+    	for (var i = 0; i < numParticles; i++) {
             var p = particles[i];
 
             ctx.fillStyle = "blue";
@@ -110,45 +105,15 @@ var initialize = (function() {
             ctx.arc(p.x, p.y, p.size / 2, 0, 2 * Math.PI, false);
             var color = HSVtoRGB(0.6, 1, 1.5 - Math.sqrt(p.density * 2));
             color = HSVtoRGB(0.6, 1, p.size / 50);
-            //color=HSVtoRGB(Math.sqrt(p.density*4),1,1);
             ctx.fillStyle = "rgba(" + color.r + "," + color.g + "," + color.b + ",01)";
-
-            //maxDensity=Math.max(maxDensity,p.density);
-            ctx.fill();
-
-        }
-        ctx.globalCompositeOperation = 'luminosity';
-        for (var i = 0; i < numParticles; i++) {
-            var p = particles[i];
-
-            ctx.fillStyle = "blue";
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size / 2, 0, 2 * Math.PI, false);
-            var color = HSVtoRGB(0.6, 1, 1.5 - Math.sqrt(p.density * 2));
-            color = HSVtoRGB(0.6, 1, p.size / 50);
-            //color=HSVtoRGB(Math.sqrt(p.density*4),1,1);
-            ctx.fillStyle = "rgba(" + color.r + "," + color.g + "," + color.b + ",01)";
-
-            //maxDensity=Math.max(maxDensity,p.density);
             ctx.fill();
 
         }
         ctx.globalCompositeOperation = 'normal';
-        //ctx.fillStyle="rgba(0,0,255,"+maxDensity*2+")";
-        //return maxDensity;
-
     }
 
     function pour() {
         if (count % 5 == 0) {
-            /*for (var i = -10; i <= 10; i++) {
-                for (var j = -10; j <= 10; j++) {
-                    if(j*j+i*i<16){
-                var p = new Particle(mouseX + i * 10, mouseY+j*10);
-                p.vy = 3;
-                particles[numParticles++] = p;
-                    }
-            */
             var p = new Particle(mouseX, mouseY);
             p.vy = 3;
             particles[numParticles++] = p;
@@ -253,13 +218,6 @@ var initialize = (function() {
             grids[i] = new Array(NUM_GRIDSY);
             for (var j = 0; j < NUM_GRIDSY; j++)
                 grids[i][j] = new Grid();
-        }
-        for (var y = 25; y < 250; y += 25) {
-            for (var x = 25; x < w - 25; x += 25) {
-                var p = new Particle(x, h - y);
-                p.vy = 0;
-                particles[numParticles++] = p;
-            }
         }
         window.addEventListener('mouseup', function(e) {
             press = false;
